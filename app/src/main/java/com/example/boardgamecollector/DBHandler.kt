@@ -85,6 +85,20 @@ class DBHandler(context: Context,
         return count == 1
     }
 
+    fun countGames(): Int {
+        val cursor = readableDatabase.rawQuery("SELECT game_id FROM boardgames", null)
+        val gamesCount = cursor.count
+        cursor.close()
+        return gamesCount
+    }
+
+    fun countDLC(): Int {
+        val cursor = readableDatabase.rawQuery("SELECT dlc_id FROM dlc", null)
+        val dlcCount = cursor.count
+        cursor.close()
+        return dlcCount
+    }
+
     fun deleteUsers() {
         writableDatabase.execSQL("DELETE FROM user")
     }
