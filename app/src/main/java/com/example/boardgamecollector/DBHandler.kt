@@ -78,6 +78,30 @@ class DBHandler(context: Context,
         db.insert("user", null, values)
     }
 
+    fun addBoardGame(boardGame: BoardGame){
+        val values = ContentValues()
+        val db = this.writableDatabase
+        values.put("title", boardGame.title)
+        values.put("release_date", boardGame.releaseDate)
+        values.put("bgg_id", boardGame.bggId)
+        values.put("rank", boardGame.rank)
+        values.put("image", boardGame.image)
+
+        db.insert("boardgames", null, values)
+    }
+
+    fun addDlc(dlc: DLC){
+        val values = ContentValues()
+        val db = this.writableDatabase
+        values.put("dlc_id", dlc.dlcId)
+        values.put("title", dlc.dlcId)
+        values.put("release_date", dlc.releaseDate)
+        values.put("bgg_id", dlc.bggId)
+        values.put("image", dlc.image)
+
+        db.insert("dlc", null, values)
+    }
+
     fun userExists(): Boolean {
         val cursor = readableDatabase.rawQuery("SELECT name FROM user", null)
         val count = cursor.count
@@ -97,6 +121,19 @@ class DBHandler(context: Context,
         val dlcCount = cursor.count
         cursor.close()
         return dlcCount
+    }
+
+    fun getName(): String? {
+        val cursor = readableDatabase.rawQuery("SELECT name FROM user", null)
+        var name: String? = null
+        if (cursor.moveToFirst()){
+            val columnIndex = cursor.getColumnIndex("name")
+            if (columnIndex != -1) {
+                name = cursor.getString(columnIndex).toString()
+            }
+            cursor.close()
+        }
+        return name
     }
 
     fun deleteUsers() {
