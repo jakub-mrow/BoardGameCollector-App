@@ -29,6 +29,8 @@ class SetupFragment : Fragment() {
 
         binding.startAppBtn.setOnClickListener {
             dbHandler.addUser(binding.enterUsername.text.toString(), convertDate(LocalDateTime.now()))
+            val mainActivity = activity as MainActivity
+            mainActivity.downloadData()
             findNavController().navigate(R.id.action_setupFragment_to_profileFragment)
         }
 
