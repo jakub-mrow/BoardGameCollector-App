@@ -6,7 +6,10 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/drawable/circle_button.xml" value="0.382" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/drawable/ic_launcher_background.xml" value="0.382" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/drawable/round_button.xml" value="0.382" />
-        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/activity_main.xml" value="0.2695035460992908" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_profile.xml" value="0.31354166666666666" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_setup.xml" value="0.33" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/profile_activity.xml" value="0.33" />
       </map>
     </option>
   </component>
