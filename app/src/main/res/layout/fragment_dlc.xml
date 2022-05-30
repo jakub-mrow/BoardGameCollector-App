@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#6065fd"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="120dp"
+        android:layout_marginTop="-50dp"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="20dp">
+
+
+        <ListView
+            android:id="@+id/listOfDlc"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="50dp">
+
+
+        </ListView>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="-85dp"
+        android:backgroundTint="#2cd2a0"
+        android:fontFamily="@font/fira_code_light"
+        android:text="Back" />
+</LinearLayout>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.boardgamecollector.databinding.FragmentProfileBinding
 import java.time.LocalDateTime
 
@@ -35,6 +36,14 @@ class ProfileFragment : Fragment() {
             dbHandler.deleteUsers()
             dbHandler.deleteBoardGames()
             dbHandler.deleteDLC()
+        }
+
+        binding.listGamesbtn.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_boardGamesFragment)
+        }
+
+        binding.listDLCbtn.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_dlcFragment)
         }
     }
 
