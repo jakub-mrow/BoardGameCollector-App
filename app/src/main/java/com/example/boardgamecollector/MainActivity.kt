@@ -9,6 +9,7 @@ import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        dbHandler.deleteUsers()
+//        dbHandler.deleteUsers()
+//        dbHandler.deleteBoardGames()
+//        dbHandler.deleteDLC()
 
         if (dbHandler.userExists()){
             navController.navigate(R.id.action_setupFragment_to_profileFragment)
@@ -51,13 +54,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private inner class GamesDownloader: AsyncTask<String, Int, String>(){
+    private inner class BoardGamesDownloader: AsyncTask<String, Int, String>(){
         override fun onPreExecute() {
             super.onPreExecute()
+
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            navHostFragment?.childFragmentManager?.fragments?.forEach { fragment ->
+                if (fragment is SetupFragment) {
+                    fragment.updateFragment()
+                }
+            }
         }
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
+
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            navHostFragment?.findNavController()?.navigate(R.id.action_setupFragment_to_profileFragment)
         }
 
         override fun doInBackground(vararg args: String?): String {
@@ -205,7 +218,7 @@ class MainActivity : AppCompatActivity() {
     fun downloadData() {
         val userName = dbHandler.getName()
         if (userName != null){
-            val gamesDownloader = GamesDownloader()
+            val gamesDownloader = BoardGamesDownloader()
             gamesDownloader.execute(userName)
         }
     }
