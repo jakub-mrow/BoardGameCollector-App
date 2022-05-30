@@ -140,6 +140,14 @@ class DBHandler(context: Context,
         writableDatabase.execSQL("DELETE FROM user")
     }
 
+    fun deleteBoardGames() {
+        writableDatabase.execSQL("DELETE FROM boardgames")
+    }
+
+    fun deleteDLC() {
+        writableDatabase.execSQL("DELETE FROM dlc")
+    }
+
 
 
 }
