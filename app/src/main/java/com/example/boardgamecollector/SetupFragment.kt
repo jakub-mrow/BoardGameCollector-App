@@ -31,7 +31,7 @@ class SetupFragment : Fragment() {
             dbHandler.addUser(binding.enterUsername.text.toString(), convertDate(LocalDateTime.now()))
             val mainActivity = activity as MainActivity
             mainActivity.downloadData()
-            findNavController().navigate(R.id.action_setupFragment_to_profileFragment)
+            //findNavController().navigate(R.id.action_setupFragment_to_profileFragment)
         }
 
     }
@@ -40,6 +40,10 @@ class SetupFragment : Fragment() {
         super.onAttach(context)
         dbHandler = DBHandler(context, null)
 
+    }
+
+    fun updateFragment(){
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     fun convertDate(date: LocalDateTime): String {
