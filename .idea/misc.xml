@@ -7,8 +7,12 @@
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/drawable/ic_launcher_background.xml" value="0.382" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/drawable/round_button.xml" value="0.382" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/dlc_view_template.xml" value="0.3115942028985507" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_board_games.xml" value="0.3115942028985507" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_dlc.xml" value="0.3115942028985507" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_profile.xml" value="0.31354166666666666" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/fragment_setup.xml" value="0.33" />
+        <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/game_boards_view_template.xml" value="0.3115942028985507" />
         <entry key="..\:/Users/jakub/AndroidStudioProjects/BoardGameCollector/app/src/main/res/layout/profile_activity.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_board_games.xml" value="0.23392486572265625" />
         <entry key="app/src/main/res/layout/fragment_dlc.xml" value="0.1766304347826087" />
