@@ -9,7 +9,17 @@
         android:id="@+id/profileFragment"
         android:name="com.example.boardgamecollector.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_boardGamesFragment"
+            app:destination="@id/boardGamesFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_dlcFragment"
+            app:destination="@id/dlcFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_syncFragment"
+            app:destination="@id/syncFragment" />
+    </fragment>
     <fragment
         android:id="@+id/setupFragment"
         android:name="com.example.boardgamecollector.SetupFragment"
@@ -17,6 +27,33 @@
         tools:layout="@layout/fragment_setup" >
         <action
             android:id="@+id/action_setupFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/boardGamesFragment"
+        android:name="com.example.boardgamecollector.BoardGamesFragment"
+        android:label="fragment_board_games"
+        tools:layout="@layout/fragment_board_games" >
+        <action
+            android:id="@+id/action_boardGamesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dlcFragment"
+        android:name="com.example.boardgamecollector.DlcFragment"
+        android:label="fragment_dlc"
+        tools:layout="@layout/fragment_dlc" >
+        <action
+            android:id="@+id/action_dlcFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/syncFragment"
+        android:name="com.example.boardgamecollector.SyncFragment"
+        android:label="fragment_sync"
+        tools:layout="@layout/fragment_sync" >
+        <action
+            android:id="@+id/action_syncFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

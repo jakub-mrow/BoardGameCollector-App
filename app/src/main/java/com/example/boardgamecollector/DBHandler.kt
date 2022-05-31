@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.content.Context
 import android.content.ContentValues
+import android.database.Cursor
 import java.text.DateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -134,6 +135,17 @@ class DBHandler(context: Context,
             cursor.close()
         }
         return name
+    }
+
+    fun findGamesCursor(): Cursor {
+        val query = "SELECT game_id as _id, title, release_date, rank, image FROM boardgames ORDER BY game_id"
+        return readableDatabase.rawQuery(query, null)
+    }
+
+    fun findDlcCursor(): Cursor {
+        val query =
+            "SELECT dlc_id as _id, title, release_date FROM dlc ORDER BY dlc_id"
+        return readableDatabase.rawQuery(query, null)
     }
 
     fun deleteUsers() {

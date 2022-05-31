@@ -41,10 +41,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="-40dp"
         app:cardBackgroundColor="#f1f5ff"
 
         app:cardCornerRadius="40dp"
