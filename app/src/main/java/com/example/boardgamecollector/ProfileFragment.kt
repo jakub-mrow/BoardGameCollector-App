@@ -45,6 +45,10 @@ class ProfileFragment : Fragment() {
         binding.listDLCbtn.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_dlcFragment)
         }
+
+        binding.syncScreenBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_syncFragment)
+        }
     }
 
     override fun onAttach(context: Context) {

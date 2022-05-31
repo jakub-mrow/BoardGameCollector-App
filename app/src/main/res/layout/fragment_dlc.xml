@@ -36,7 +36,8 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="-85dp"
-        android:backgroundTint="#2cd2a0"
+        android:backgroundTint="#ffffff"
+        android:textColor="@color/black"
         android:fontFamily="@font/fira_code_light"
         android:text="Back" />
 </LinearLayout>
