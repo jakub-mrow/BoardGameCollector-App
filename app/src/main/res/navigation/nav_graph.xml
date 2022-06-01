@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_boardGamesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_boardGamesFragment_to_rankingHistoryFragment"
+            app:destination="@id/rankingHistoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/dlcFragment"
@@ -55,5 +58,14 @@
         <action
             android:id="@+id/action_syncFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rankingHistoryFragment"
+        android:name="com.example.boardgamecollector.RankingHistoryFragment"
+        android:label="fragment_ranking_history"
+        tools:layout="@layout/fragment_ranking_history" >
+        <action
+            android:id="@+id/action_rankingHistoryFragment_to_boardGamesFragment"
+            app:destination="@id/boardGamesFragment" />
     </fragment>
 </navigation>

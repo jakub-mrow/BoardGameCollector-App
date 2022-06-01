@@ -11,43 +11,49 @@ import android.widget.ImageView
 import android.widget.SimpleCursorAdapter
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
-import com.example.boardgamecollector.databinding.FragmentBoardGamesBinding
+import com.example.boardgamecollector.databinding.FragmentRankingHistoryBinding
 import com.squareup.picasso.Picasso
 
-class BoardGamesFragment : Fragment() {
-    private lateinit var binding: FragmentBoardGamesBinding
+class RankingHistoryFragment : Fragment() {
+    private lateinit var binding: FragmentRankingHistoryBinding
     private lateinit var dbHandler: DBHandler
     private lateinit var adapter: SimpleCursorAdapter
+    private var gameIdNew: Long? = null
+
+    companion object {
+        const val ID = "boardGameId"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let{
+            gameIdNew = it.getLong(ID)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBoardGamesBinding.inflate(inflater, container, false)
+        binding = FragmentRankingHistoryBinding.inflate(inflater, container, false)
+
+        dbHandler = DBHandler(requireContext(), null)
+        setAdapter(requireContext(), dbHandler.findGameCursor(gameIdNew!!))
 
         binding.backBtn.setOnClickListener{
-            findNavController().navigate(R.id.action_boardGamesFragment_to_profileFragment)
+            findNavController().navigate(R.id.action_rankingHistoryFragment_to_boardGamesFragment)
         }
 
-        binding.listOfBoardGames.setOnItemClickListener { _, _, _, gameId ->
-            val boardGame = dbHandler.findGame(gameId) ?: return@setOnItemClickListener
-            val bundle = Bundle()
-            bundle.putLong(RankingHistoryFragment.ID, gameId)
-            findNavController().navigate(R.id.action_boardGamesFragment_to_rankingHistoryFragment, bundle)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.listOfBoardGames.adapter = adapter
+        binding.boardGame.adapter = adapter
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        dbHandler = DBHandler(context, null)
-        setAdapter(context, dbHandler.findGamesCursor())
-
     }
 
     private fun setAdapter(context: Context, cursor: Cursor) {
@@ -71,4 +77,5 @@ class BoardGamesFragment : Fragment() {
             return@setViewBinder true
         }
     }
+
 }

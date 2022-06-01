@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.boardgamecollector.databinding.FragmentSyncBinding
+import java.time.LocalDateTime
 
 class SyncFragment : Fragment() {
     private lateinit var binding: FragmentSyncBinding
@@ -23,13 +24,31 @@ class SyncFragment : Fragment() {
             findNavController().navigate(R.id.action_syncFragment_to_profileFragment)
         }
 
+        binding.syncUserBtn.setOnClickListener{
+
+        }
+
+        binding.newSyncBtn.setOnClickListener{
+            dbHandler.bigDelete()
+            dbHandler.addUser(binding.enterNewUsername.text.toString(), convertDate(LocalDateTime.now()))
+            val mainActivity = activity as MainActivity
+            mainActivity.downloadData()
+        }
+
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         dbHandler = DBHandler(context, null)
+    }
 
+    fun convertDate(date: LocalDateTime): String {
+        return date.toString().split("T").joinToString(" ")
+    }
+
+    fun updateFragment(){
+        binding.progressBar.visibility = View.VISIBLE
     }
 
 }

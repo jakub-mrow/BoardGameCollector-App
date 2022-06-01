@@ -63,6 +63,10 @@ class MainActivity : AppCompatActivity() {
                 if (fragment is SetupFragment) {
                     fragment.updateFragment()
                 }
+
+                if (fragment is SyncFragment) {
+                    fragment.updateFragment()
+                }
             }
         }
 
@@ -70,7 +74,15 @@ class MainActivity : AppCompatActivity() {
             super.onPostExecute(result)
 
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-            navHostFragment?.findNavController()?.navigate(R.id.action_setupFragment_to_profileFragment)
+            navHostFragment?.childFragmentManager?.fragments?.forEach { fragment ->
+                if (fragment is SetupFragment){
+                    navHostFragment?.findNavController()?.navigate(R.id.action_setupFragment_to_profileFragment)
+                }
+                if (fragment is SyncFragment) {
+                    navHostFragment?.findNavController()?.navigate(R.id.action_syncFragment_to_profileFragment)
+                }
+            }
+
         }
 
         override fun doInBackground(vararg args: String?): String {

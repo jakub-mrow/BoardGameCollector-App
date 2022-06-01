@@ -137,6 +137,31 @@ class DBHandler(context: Context,
         return name
     }
 
+    fun findGame(id: Long): BoardGame?{
+        val cursor = writableDatabase.rawQuery(
+            "SELECT * FROM boardgames WHERE game_id = ?", arrayOf(id.toString())
+        )
+        if (!cursor.moveToFirst()) {
+            cursor.close()
+            return null
+        }
+        return BoardGame(
+            id,
+            cursor.getString(cursor.getColumnIndexOrThrow("title")),
+            cursor.getInt(cursor.getColumnIndexOrThrow("release_date")),
+            cursor.getLong(cursor.getColumnIndexOrThrow("bgg_id")),
+            cursor.getInt(cursor.getColumnIndexOrThrow("rank")),
+            cursor.getString(cursor.getColumnIndexOrThrow("image"))
+        )
+    }
+
+    fun findGameCursor(id: Long): Cursor {
+//        val cursor = writableDatabase.rawQuery(
+//            "SELECT game_id as _id, title, release_date, rank, image FROM boardgames WHERE game_id = ?", arrayOf(id.toString())
+//        )
+        return readableDatabase.rawQuery("SELECT game_id as _id, title, release_date, rank, image FROM boardgames WHERE game_id = ?", arrayOf(id.toString()))
+    }
+
     fun findGamesCursor(): Cursor {
         val query = "SELECT game_id as _id, title, release_date, rank, image FROM boardgames ORDER BY game_id"
         return readableDatabase.rawQuery(query, null)
@@ -158,6 +183,12 @@ class DBHandler(context: Context,
 
     fun deleteDLC() {
         writableDatabase.execSQL("DELETE FROM dlc")
+    }
+
+    fun bigDelete(){
+        deleteUsers()
+        deleteBoardGames()
+        deleteDLC()
     }
 
 
