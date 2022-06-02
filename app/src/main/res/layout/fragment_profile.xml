@@ -20,16 +20,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="18dp"
         android:text="Profile name"
-        android:textSize="24dp"
+        android:textSize="26dp"
         android:textColor="#ffffff"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="#f1f5ff"
-        android:layout_marginBottom="-20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:cardCornerRadius="33dp"
         app:cardElevation="30dp">
 
@@ -49,8 +51,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="15dp"
                 app:cardBackgroundColor="#ffffff"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="35dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -61,11 +63,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="41dp"
-                        android:text="Games collection: 0"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginTop="39dp"
+                        android:text="Games stock: 0"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="20dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/listGamesbtn"
@@ -78,6 +80,7 @@
                         android:backgroundTint="#2cd2a0"
                         android:fontFamily="@font/fira_code_light"
                         android:text="List"
+                        android:textSize="15dp"
                         app:cornerRadius="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -97,8 +100,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="15dp"
                 app:cardBackgroundColor="#ffffff"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="35dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -109,11 +112,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="41dp"
-                        android:text="DLC collection: 0"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginTop="39dp"
+                        android:text="DLC stock: 0"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="20dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/listDLCbtn"
@@ -127,6 +130,7 @@
                         android:fontFamily="@font/fira_code_light"
                         android:text="List"
                         app:cornerRadius="8dp"
+                        android:textSize="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -146,8 +150,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="#ffffff"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="20dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="35dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -158,12 +162,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="31dp"
+                        android:layout_marginLeft="18dp"
+                        android:layout_marginTop="28dp"
                         android:text="Last sync: Date"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="20dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/syncScreenBtn"
@@ -177,6 +181,7 @@
                         android:fontFamily="@font/fira_code_light"
                         android:text="Sync"
                         app:cornerRadius="8dp"
+                        android:textSize="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -194,9 +199,10 @@
                 android:layout_gravity="center"
                 android:backgroundTint="#2cd2a0"
                 android:fontFamily="@font/fira_code_light"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:text="Exit"
                 app:cornerRadius="8dp"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

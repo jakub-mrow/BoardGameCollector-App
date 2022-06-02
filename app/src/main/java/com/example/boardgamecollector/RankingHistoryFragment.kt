@@ -40,6 +40,8 @@ class RankingHistoryFragment : Fragment() {
         dbHandler = DBHandler(requireContext(), null)
         setAdapter(requireContext(), dbHandler.findGameCursor(gameIdNew!!))
 
+        setRankingsAdapter(requireContext(), dbHandler.findRankingsCursor(gameIdNew!!))
+
         binding.backBtn.setOnClickListener{
             findNavController().navigate(R.id.action_rankingHistoryFragment_to_boardGamesFragment)
         }
@@ -78,4 +80,22 @@ class RankingHistoryFragment : Fragment() {
         }
     }
 
+    private fun setRankingsAdapter(context: Context, cursor: Cursor){
+        val columns = arrayOf("date", "rank")
+        val id = intArrayOf(R.id.rankDate, R.id.rankPosition)
+        adapter = SimpleCursorAdapter(context, R.layout.rankings_view_template, cursor, columns, id, 0)
+        adapter.setViewBinder { view, dbCursor, column ->
+            when (view.id) {
+                R.id.rankPosition -> {
+                    val textView = view as TextView
+                    textView.text = dbCursor.getString(column)
+                }
+                R.id.rankDate -> {
+                    val textView = view as TextView
+                    textView.text =  dbCursor.getString(column)
+                }
+            }
+            return@setViewBinder true
+        }
+    }
 }

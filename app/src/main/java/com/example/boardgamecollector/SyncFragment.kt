@@ -25,7 +25,9 @@ class SyncFragment : Fragment() {
         }
 
         binding.syncUserBtn.setOnClickListener{
-
+            dbHandler.bigDelete()
+            val mainActivity = activity as MainActivity
+            mainActivity.downloadData()
         }
 
         binding.newSyncBtn.setOnClickListener{

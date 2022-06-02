@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import com.example.boardgamecollector.databinding.ActivityMainBinding
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.fragment.app.Fragment
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg args: String?): String {
             try {
-                val url = URL("https://boardgamegeek.com/xmlapi2/collection?username=${args[0]}&stats=1")
+                val url = URL("https://boardgamegeek.com/xmlapi2/collection?username=${args[0]}&stats=1&subtype=boardgame&excludesubtype=boardgameexpansion&own=1")
                 var lengthOfFile = 0
                 for (i in 0..4) {
                     val connection = url.openConnection() as HttpURLConnection
@@ -129,99 +130,164 @@ class MainActivity : AppCompatActivity() {
             val boardGameList = ArrayList<BoardGame>()
             val dlcList = ArrayList<DLC>()
 
-            val fileName = "board_games.xml"
-            val inDir = File(filesDir, "XML")
+            var fileName = "board_games.xml"
+            var inDir = File(filesDir, "XML")
 
-            if (inDir.exists()) {
-                val file = File(inDir, fileName)
-                if (file.exists()) {
-                    val xmlDoc: Document =
-                        DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
-                    xmlDoc.documentElement.normalize()
-                    val items: NodeList = xmlDoc.getElementsByTagName("item")
-                    for (i in 0 until items.length) {
-                        val itemNode: Node = items.item(i)
-                        if (itemNode.nodeType == Node.ELEMENT_NODE) {
-                            val children = itemNode.childNodes
-                            var currentName: String? = null
-                            var currentYear: String? = null
-                            val currentBggId =
-                                itemNode.attributes.getNamedItem("objectid").textContent
-                            var currentRank: String? = null
-                            var currentBayesAverage: String? = null
-                            var currentImageUrl: String? = null
-                            for (j in 0 until children.length) {
-                                val node = children.item(j)
-                                if (node is Element) {
-                                    when (node.nodeName) {
-                                        "name" -> currentName = node.textContent
-                                        "yearpublished" -> currentYear = node.textContent
-                                        "image" -> currentImageUrl = node.textContent
-                                        "stats" -> {
-                                            val statsChildren = node.childNodes
-                                            for (k in 0 until statsChildren.length) {
-                                                val statsChild = statsChildren.item(k)
-                                                if (statsChild.nodeName == "rating") {
-                                                    val ratingChildren = statsChild.childNodes
-                                                    for (l in 0 until ratingChildren.length) {
-                                                        val ratingChild = ratingChildren.item(l)
-                                                        if (ratingChild.nodeName == "ranks") {
-                                                            val ranksChildren =
-                                                                ratingChild.childNodes
-                                                            for (m in 0 until ranksChildren.length) {
-                                                                val rankChild =
-                                                                    ranksChildren.item(m)
-                                                                if (rankChild is Element) {
-                                                                    val type =
-                                                                        rankChild.attributes.getNamedItem("type")
-                                                                    val name =
-                                                                        rankChild.attributes.getNamedItem("name")
+            var file = File(inDir, fileName)
 
-                                                                    if (type != null && type.textContent == "subtype" && name != null && name.textContent == "boardgame") {
-                                                                        currentRank = rankChild.attributes.getNamedItem("value").textContent
-                                                                        currentBayesAverage = rankChild.attributes.getNamedItem("bayesaverage").textContent
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+            var xmlDoc: Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
+            xmlDoc.documentElement.normalize()
+            if (xmlDoc.childNodes.item(0).nodeName == "message"){
+                return  "fail"
+            }
+            var items: NodeList = xmlDoc.getElementsByTagName("item")
+
+            for (i in 0 until items.length){
+                val item : Node = items.item(i)
+                if (item.nodeType == Node.ELEMENT_NODE){
+                    val elem = item as Element
+                    val children = elem.childNodes
+
+                    var bggId: Long = 0
+                    var title = "N/A"
+                    var releaseYear: Int = 0
+                    var imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngitem.com%2Fso%2Fboard-games%2F&psig=AOvVaw2W7UIk3Rmy7_g6ziNUPjOv&ust=1654205726550000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJDekdqajfgCFQAAAAAdAAAAABAJ"
+                    var ranking: Int = 0
+
+                    bggId = elem.getAttribute("objectid").toLong()
+                    val rankingTags =  elem.getElementsByTagName("rank")
+
+                    for (j in 0 until children.length){
+                        val node = children.item(j)
+                        if (node is Element){
+                            when (node.nodeName){
+                                "yearpublished" -> {
+                                    releaseYear = node.textContent.toInt()
                                 }
-                            }
-                            if (currentYear != null && currentName != null && currentBggId != null && currentRank != null) {
-                                if (currentRank == "Not Ranked" && currentBayesAverage != "Not Ranked") {
-                                    dlcList.add(
-                                        DLC(
-                                            null,
-                                            currentName,
-                                            currentYear.toInt(),
-                                            currentBggId.toLong(),
-                                            currentImageUrl
-                                        )
-                                    )
-                                } else {
-                                    boardGameList.add(
-                                        BoardGame(
-                                            null,
-                                            currentName,
-                                            currentYear.toInt(),
-                                            currentBggId.toLong(),
-                                            if (currentRank != "Not Ranked") currentRank.toInt() else 0,
-                                            currentImageUrl
-                                        )
-                                    )
+                                "name" -> {
+                                    title = node.textContent.toString()
+                                }
+                                "thumbnail" -> {
+                                    imageUrl = node.textContent.toString()
                                 }
                             }
                         }
                     }
+
+                    for (j in 0 until rankingTags.length) {
+                        val item2: Node = rankingTags.item(j)
+                        if (item2.nodeType == Node.ELEMENT_NODE) {
+                            val elem2 = item2 as Element
+                            if (elem2.getAttribute("friendlyname") == "Board Game Rank") {
+                                if (elem2.getAttribute("value").toString() == "Not Ranked") {
+                                    ranking = 0
+                                } else {
+                                    ranking = elem2.getAttribute("value").toInt()
+                                }
+                            }
+                        }
+                    }
+                    val game = BoardGame(null,title,releaseYear,bggId,ranking,imageUrl)
+                    boardGameList.add(game)
                 }
+
             }
 
             boardGameList.forEach { dbHandler.addBoardGame(it) }
+
+            val url = URL("https://boardgamegeek.com/xmlapi2/collection?username=${args[0]}&stats=1&subtype=boardgameexpansion&own=1")
+            try {
+
+                val connection = url.openConnection()
+                connection.connect()
+                val lengthOfFile = connection.contentLength
+                val isStream= url.openStream()
+
+                val testDirectory = File("$filesDir/XML")
+                if (!testDirectory.exists()) testDirectory.mkdir()
+
+                val fos = FileOutputStream( "$testDirectory/dlc.xml")
+                val data = ByteArray ( 1024)
+                var count=0
+                var total: Long = 0
+                var progress = 0
+                count = isStream.read(data)
+                while (count != -1) {
+                    total += count.toLong()
+                    val progress_temp = total.toInt() *100/ lengthOfFile
+                    if (progress_temp %10 == 0 && progress != progress_temp) {
+                        progress = progress_temp
+                    }
+                    fos.write(data,  0,count)
+                    count =  isStream.read(data)
+                }
+                isStream.close()
+                fos.close()
+            } catch (e: MalformedURLException) {
+                return "Wrong URL!"
+            } catch (e: FileNotFoundException) {
+                return "File not found!"
+            } catch (e: IOException) {
+                return "IO Exception!"
+            }
+
+            fileName = "dlc.xml"
+            inDir = File(filesDir, "XML")
+
+            file = File(inDir, fileName)
+
+            xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
+            xmlDoc.documentElement.normalize()
+            if (xmlDoc.childNodes.item(0).nodeName == "message"){
+                return  "fail"
+            }
+            items= xmlDoc.getElementsByTagName("item")
+
+            for (i in 0 until items.length){
+                try {
+                    val item: Node = items.item(i)
+                    if (item.nodeType == Node.ELEMENT_NODE) {
+                        val elem = item as Element
+                        val children = elem.childNodes
+
+
+                        var bggId: Long = 0
+                        var title = "N/A"
+                        var releaseYear: Int = 0
+                        var imageUrl = "https://i.imgur.com/4ma0EnA.png"
+                        var ranking: Int = 0
+
+                        bggId = elem.getAttribute("objectid").toLong()
+                        val rankingTags = elem.getElementsByTagName("rank")
+
+                        for (j in 0 until children.length) {
+                            val node = children.item(j)
+                            if (node is Element) {
+                                when (node.nodeName) {
+                                    "yearpublished" -> {
+                                        releaseYear = node.textContent.toInt()
+                                    }
+                                    "name" -> {
+                                        title = node.textContent.toString()
+                                    }
+                                    "thumbnail" -> {
+                                        imageUrl = node.textContent.toString()
+                                    }
+                                }
+                            }
+                        }
+                        Log.e("title", title)
+                        val dlc = DLC(null, title, releaseYear, bggId, imageUrl)
+                        dlcList.add(dlc)
+                    }
+                }
+                catch(e: Exception){
+                    continue
+                }
+            }
+
             dlcList.forEach { dbHandler.addDlc(it) }
+
             return "success"
         }
     }

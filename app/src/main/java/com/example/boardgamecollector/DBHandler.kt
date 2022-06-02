@@ -47,10 +47,10 @@ class DBHandler(context: Context,
                 )
 
         val CREATE_RANKS_TABLE = (
-                "CREATE TABLE ranks(" +
+                "CREATE TABLE ranks (" +
                         "rank_id INTEGER PRIMARY KEY," +
                         "game_id INTEGER," +
-                        "release_date TEXT," +
+                        "date TEXT," +
                         "rank INTEGER," +
                         "FOREIGN KEY(game_id) REFERENCES boardgames(game_id) ON DELETE CASCADE" +
                         ")"
@@ -89,18 +89,37 @@ class DBHandler(context: Context,
         values.put("image", boardGame.image)
 
         db.insert("boardgames", null, values)
+
+        val cursor = writableDatabase.rawQuery(
+            "SELECT * FROM boardgames WHERE bgg_id = ?",
+            arrayOf(boardGame.bggId.toString())
+        )
+        if (cursor.moveToFirst()){
+            val gameId = cursor.getLong(cursor.getColumnIndexOrThrow("game_id"))
+            addRankingPosition(null, gameId, convertDate(LocalDateTime.now()), boardGame.rank)
+        }
+        cursor.close()
+
     }
 
     fun addDlc(dlc: DLC){
         val values = ContentValues()
         val db = this.writableDatabase
         values.put("dlc_id", dlc.dlcId)
-        values.put("title", dlc.dlcId)
+        values.put("title", dlc.title)
         values.put("release_date", dlc.releaseDate)
         values.put("bgg_id", dlc.bggId)
         values.put("image", dlc.image)
 
         db.insert("dlc", null, values)
+    }
+
+    fun addRankingPosition(id: Long?, gameId: Long, date: String, position: Int){
+        val values = ContentValues()
+        values.put("game_id", gameId)
+        values.put("date", date)
+        values.put("rank", position)
+        writableDatabase.insert("ranks", null, values)
     }
 
     fun userExists(): Boolean {
@@ -156,9 +175,6 @@ class DBHandler(context: Context,
     }
 
     fun findGameCursor(id: Long): Cursor {
-//        val cursor = writableDatabase.rawQuery(
-//            "SELECT game_id as _id, title, release_date, rank, image FROM boardgames WHERE game_id = ?", arrayOf(id.toString())
-//        )
         return readableDatabase.rawQuery("SELECT game_id as _id, title, release_date, rank, image FROM boardgames WHERE game_id = ?", arrayOf(id.toString()))
     }
 
@@ -169,8 +185,15 @@ class DBHandler(context: Context,
 
     fun findDlcCursor(): Cursor {
         val query =
-            "SELECT dlc_id as _id, title, release_date FROM dlc ORDER BY dlc_id"
+            "SELECT dlc_id as _id, title, release_date, image FROM dlc ORDER BY dlc_id"
         return readableDatabase.rawQuery(query, null)
+    }
+
+    fun findRankingsCursor(gameId: Long): Cursor {
+        return readableDatabase.rawQuery(
+            "SELECT rank_id as _id, date, rank FROM ranks WHERE game_id = ? ORDER BY date",
+            arrayOf(gameId.toString())
+        )
     }
 
     fun deleteUsers() {
@@ -184,11 +207,22 @@ class DBHandler(context: Context,
     fun deleteDLC() {
         writableDatabase.execSQL("DELETE FROM dlc")
     }
+    fun deleteRanks() {
+        writableDatabase.execSQL("DELETE FROM ranks")
+    }
 
     fun bigDelete(){
         deleteUsers()
         deleteBoardGames()
         deleteDLC()
+    }
+
+    fun convertDate(date: LocalDateTime): String {
+        val datePart = date.toString().split("T")[0]
+        val timePart = date.toString().split("T")[1]
+        val timeWithoutMiliSeconds = timePart.split(":").slice(0..1).joinToString(":")
+        //return date.toString().split("T").joinToString(" ")
+        return "$datePart $timeWithoutMiliSeconds"
     }
 
 

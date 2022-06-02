@@ -23,8 +23,8 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.profileNameTxt.text = dbHandler.getName().toString()
-        binding.gamesCollectionText.text = "Games collection: " + dbHandler.countGames().toString()
-        binding.dlcCollectionText.text = "DLC collection: " + dbHandler.countDLC().toString()
+        binding.gamesCollectionText.text = "Games stock: " + dbHandler.countGames().toString()
+        binding.dlcCollectionText.text = "DLC stock: " + dbHandler.countDLC().toString()
         binding.lastSyncText.text = "Last sync: "+ "\n" + convertDate(LocalDateTime.now())
         return binding.root
     }
@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
             dbHandler.deleteUsers()
             dbHandler.deleteBoardGames()
             dbHandler.deleteDLC()
+            dbHandler.deleteRanks()
         }
 
         binding.listGamesbtn.setOnClickListener{
