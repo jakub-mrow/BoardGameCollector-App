@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.boardgamecollector.databinding.FragmentProfileBinding
 import java.time.LocalDateTime
+import kotlin.system.exitProcess
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -23,19 +24,25 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.profileNameTxt.text = dbHandler.getName().toString()
-        binding.gamesCollectionText.text = "Games collection: " + dbHandler.countGames().toString()
-        binding.dlcCollectionText.text = "DLC collection: " + dbHandler.countDLC().toString()
-        binding.lastSyncText.text = "Last sync: "+ "\n" + convertDate(LocalDateTime.now())
+        binding.gamesCollectionText.text = "Games stock: " + dbHandler.countGames().toString()
+        binding.dlcCollectionText.text = "DLC stock: " + dbHandler.countDLC().toString()
+        //binding.lastSyncText.text = "Last sync: "+ "\n" + convertDate(LocalDateTime.now())
+        binding.lastSyncText.text = "Last sync: "+ "\n" + dbHandler.getLastSyncDate()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lastSyncText.text = "Last sync: "+ "\n" + dbHandler.getLastSyncDate()
+
         binding.exitBtn.setOnClickListener {
             dbHandler.deleteUsers()
             dbHandler.deleteBoardGames()
             dbHandler.deleteDLC()
+            dbHandler.deleteRanks()
+            activity?.finish()
+            exitProcess(0)
         }
 
         binding.listGamesbtn.setOnClickListener{
@@ -54,7 +61,6 @@ class ProfileFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         dbHandler = DBHandler(context, null)
-
     }
 
     fun convertDate(date: LocalDateTime): String {

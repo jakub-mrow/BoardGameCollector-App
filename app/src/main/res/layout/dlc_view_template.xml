@@ -32,6 +32,13 @@ android:layout_height="match_parent" >
             android:layout_weight="1"
             android:textAlignment="center" />
 
+        <ImageView
+            android:id="@+id/dlcImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            />
+
         <TextView
             android:id="@+id/dlcTitle"
             android:layout_width="0dp"

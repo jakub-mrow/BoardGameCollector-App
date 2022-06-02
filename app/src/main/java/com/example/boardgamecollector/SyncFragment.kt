@@ -25,7 +25,11 @@ class SyncFragment : Fragment() {
         }
 
         binding.syncUserBtn.setOnClickListener{
-
+            dbHandler.deleteDLC()
+            dbHandler.deleteBoardGames()
+            val mainActivity = activity as MainActivity
+            mainActivity.downloadData()
+            dbHandler.setLastSyncDate(convertDate(LocalDateTime.now()))
         }
 
         binding.newSyncBtn.setOnClickListener{
@@ -44,7 +48,10 @@ class SyncFragment : Fragment() {
     }
 
     fun convertDate(date: LocalDateTime): String {
-        return date.toString().split("T").joinToString(" ")
+        val datePart = date.toString().split("T")[0]
+        val timePart = date.toString().split("T")[1]
+        val timeWithoutMiliSeconds = timePart.split(":").slice(0..1).joinToString(":")
+        return "$datePart $timeWithoutMiliSeconds"
     }
 
     fun updateFragment(){
