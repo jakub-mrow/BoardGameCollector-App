@@ -2,6 +2,9 @@ package com.example.boardgamecollector
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,19 +38,68 @@ class BoardGamesFragment : Fragment() {
             bundle.putLong(RankingHistoryFragment.ID, gameId)
             findNavController().navigate(R.id.action_boardGamesFragment_to_rankingHistoryFragment, bundle)
         }
+
+        binding.gameRank.setOnClickListener{
+            binding.gameRank.setTypeface(null, Typeface.BOLD)
+
+            binding.gameTitle.setTypeface(null, Typeface.NORMAL)
+            binding.gameId.setTypeface(null, Typeface.NORMAL)
+            binding.gameYear.setTypeface(null, Typeface.NORMAL)
+
+            binding.listOfBoardGames.adapter = null
+            setAdapter(requireContext(), dbHandler.findGameCursorSortRank())
+            binding.listOfBoardGames.adapter = adapter
+        }
+
+        binding.gameTitle.setOnClickListener{
+            binding.gameTitle.setTypeface(null, Typeface.BOLD)
+
+            binding.gameRank.setTypeface(null, Typeface.NORMAL)
+            binding.gameId.setTypeface(null, Typeface.NORMAL)
+            binding.gameYear.setTypeface(null, Typeface.NORMAL)
+
+            binding.listOfBoardGames.adapter = null
+            setAdapter(requireContext(), dbHandler.findGameCursorSortTitle())
+            binding.listOfBoardGames.adapter = adapter
+        }
+
+        binding.gameId.setOnClickListener{
+            binding.gameId.setTypeface(null, Typeface.BOLD)
+
+            binding.gameTitle.setTypeface(null, Typeface.NORMAL)
+            binding.gameRank.setTypeface(null, Typeface.NORMAL)
+            binding.gameYear.setTypeface(null, Typeface.NORMAL)
+
+            binding.listOfBoardGames.adapter = null
+            setAdapter(requireContext(), dbHandler.findGamesCursor())
+            binding.listOfBoardGames.adapter = adapter
+        }
+
+        binding.gameYear.setOnClickListener{
+            binding.gameYear.setTypeface(null, Typeface.BOLD)
+
+            binding.gameTitle.setTypeface(null, Typeface.NORMAL)
+            binding.gameId.setTypeface(null, Typeface.NORMAL)
+            binding.gameRank.setTypeface(null, Typeface.NORMAL)
+
+            binding.listOfBoardGames.adapter = null
+            setAdapter(requireContext(), dbHandler.findGameCursorSortReleaseDate())
+            binding.listOfBoardGames.adapter = adapter
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.listOfBoardGames.adapter = adapter
+        binding.gameId.setTypeface(null, Typeface.BOLD)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         dbHandler = DBHandler(context, null)
         setAdapter(context, dbHandler.findGamesCursor())
-
     }
 
     private fun setAdapter(context: Context, cursor: Cursor) {

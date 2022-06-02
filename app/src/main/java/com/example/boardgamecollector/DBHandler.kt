@@ -202,6 +202,21 @@ class DBHandler(context: Context,
         return readableDatabase.rawQuery(query, null)
     }
 
+    fun findGameCursorSortRank(): Cursor{
+        val query = "SELECT game_id as _id, title, release_date, rank, image FROM boardgames WHERE rank != 0 ORDER BY rank"
+        return readableDatabase.rawQuery(query, null)
+    }
+
+    fun findGameCursorSortTitle(): Cursor{
+        val query = "SELECT game_id as _id, title, release_date, rank, image FROM boardgames ORDER BY title"
+        return readableDatabase.rawQuery(query, null)
+    }
+
+    fun findGameCursorSortReleaseDate(): Cursor{
+        val query = "SELECT game_id as _id, title, release_date, rank, image FROM boardgames ORDER BY release_date"
+        return readableDatabase.rawQuery(query, null)
+    }
+
     fun findDlcCursor(): Cursor {
         val query =
             "SELECT dlc_id as _id, title, release_date, image FROM dlc ORDER BY dlc_id"
