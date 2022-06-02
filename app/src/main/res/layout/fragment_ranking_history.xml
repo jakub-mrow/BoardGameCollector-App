@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="110dp"
         android:layout_marginTop="-50dp"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="#f1f5ff"
         app:cardCornerRadius="20dp"
         app:cardElevation="20dp">
 
@@ -95,13 +95,58 @@
             <ListView
                 android:id="@+id/boardGame"
                 android:layout_width="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_height="160dp">
 
             </ListView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="0dp"
+                app:cardBackgroundColor="#ffffff"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lastSyncDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Last sync date"
+                        android:textColor="@color/black"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="Rank"
+                        android:textColor="@color/black"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <ListView
                 android:id="@+id/listOfRankingHistory"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_height="match_parent">
 
 

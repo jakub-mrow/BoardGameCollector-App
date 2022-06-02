@@ -18,6 +18,7 @@ class RankingHistoryFragment : Fragment() {
     private lateinit var binding: FragmentRankingHistoryBinding
     private lateinit var dbHandler: DBHandler
     private lateinit var adapter: SimpleCursorAdapter
+    private lateinit var rankAdapter: SimpleCursorAdapter
     private var gameIdNew: Long? = null
 
     companion object {
@@ -52,6 +53,7 @@ class RankingHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.boardGame.adapter = adapter
+        binding.listOfRankingHistory.adapter = rankAdapter
     }
 
     override fun onAttach(context: Context) {
@@ -83,8 +85,8 @@ class RankingHistoryFragment : Fragment() {
     private fun setRankingsAdapter(context: Context, cursor: Cursor){
         val columns = arrayOf("date", "rank")
         val id = intArrayOf(R.id.rankDate, R.id.rankPosition)
-        adapter = SimpleCursorAdapter(context, R.layout.rankings_view_template, cursor, columns, id, 0)
-        adapter.setViewBinder { view, dbCursor, column ->
+        rankAdapter = SimpleCursorAdapter(context, R.layout.rankings_view_template, cursor, columns, id, 0)
+        rankAdapter.setViewBinder { view, dbCursor, column ->
             when (view.id) {
                 R.id.rankPosition -> {
                     val textView = view as TextView

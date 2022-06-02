@@ -276,7 +276,6 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                        Log.e("title", title)
                         val dlc = DLC(null, title, releaseYear, bggId, imageUrl)
                         dlcList.add(dlc)
                     }

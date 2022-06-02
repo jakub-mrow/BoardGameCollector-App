@@ -156,6 +156,25 @@ class DBHandler(context: Context,
         return name
     }
 
+    fun getLastSyncDate(): String? {
+        val cursor = readableDatabase.rawQuery("SELECT last_sync FROM user", null)
+        var lastSync: String? = null
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("last_sync")
+            if (columnIndex != -1) {
+                lastSync = cursor.getString(columnIndex)
+            }
+            cursor.close()
+        }
+        return lastSync
+    }
+
+    fun setLastSyncDate(syncDate: String){
+        val values = ContentValues()
+        values.put("last_sync", syncDate)
+        writableDatabase.update("user", values, null, arrayOf())
+    }
+
     fun findGame(id: Long): BoardGame?{
         val cursor = writableDatabase.rawQuery(
             "SELECT * FROM boardgames WHERE game_id = ?", arrayOf(id.toString())
