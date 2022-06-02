@@ -12,7 +12,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:layout_marginRight="15dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="2dp">
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:cardBackgroundColor="#ffffff"
@@ -71,9 +71,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:cardBackgroundColor="#ffffff"
@@ -110,6 +110,19 @@
                 android:fontFamily="@font/fira_code_light"
                 android:text="New sync" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wipeDataBtn"
+                android:layout_width="200dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:cornerRadius="8dp"
+                android:backgroundTint="#2cd2a0"
+                android:textColor="@color/black"
+                android:fontFamily="@font/fira_code_light"
+                android:text="Wipe data" />
+
 
 
         </LinearLayout>
@@ -122,7 +135,7 @@
         android:layout_width="200dp"
         android:layout_height="55dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:cornerRadius="8dp"
         android:backgroundTint="#ffffff"
         android:textColor="@color/black"
